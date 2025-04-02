@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from aiogram import F, Router
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import CommandStart
-from aiogram.types import Message, CallbackQuery, BufferedInputFile
+from aiogram.types import Message, CallbackQuery, BufferedInputFile, ReplyKeyboardRemove
 
 import app.keyboards as kb
 from app.currency_rate import plot_currency_rate, get_currency_codes, get_actual_currency
@@ -25,7 +25,8 @@ router = Router()
 @router.message(CommandStart())
 async def cmd_start(message: Message):
     # Обработчик команды /start, отправляет приветственное сообщение и клавиатуру с выбором валюты
-    await message.answer_sticker(sticker="CAACAgIAAxkBAAILImMls3AztJgD37K6ITvFWxHfuWqsAAKAAQACB4YVBxWoUrqMlKESKQQ")
+    await message.answer_sticker(sticker="CAACAgIAAxkBAAILImMls3AztJgD37K6ITvFWxHfuWqsAAKAAQACB4YVBxWoUrqMlKESKQQ",
+                                 reply_markup=ReplyKeyboardRemove())
     await message.answer("Приветствую! Выбери валюту, курс которой хочешь узнать.",
                          reply_markup=await kb.inline_values())
 
